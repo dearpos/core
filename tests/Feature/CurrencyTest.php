@@ -3,7 +3,6 @@
 namespace Dearpos\Core\Tests\Feature;
 
 use Dearpos\Core\Models\Currency;
-use Dearpos\Core\Tests\TestCase;
 
 beforeEach(function () {
     Currency::query()->forceDelete();

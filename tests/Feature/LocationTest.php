@@ -3,7 +3,6 @@
 namespace Dearpos\Core\Tests\Feature;
 
 use Dearpos\Core\Models\Location;
-use Dearpos\Core\Tests\TestCase;
 
 beforeEach(function () {
     Location::query()->forceDelete();

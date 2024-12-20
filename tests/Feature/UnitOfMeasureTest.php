@@ -3,7 +3,6 @@
 namespace Dearpos\Core\Tests\Feature;
 
 use Dearpos\Core\Models\UnitOfMeasure;
-use Dearpos\Core\Tests\TestCase;
 
 beforeEach(function () {
     UnitOfMeasure::query()->forceDelete();

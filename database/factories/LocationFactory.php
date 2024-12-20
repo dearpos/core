@@ -16,7 +16,14 @@ class LocationFactory extends Factory
             'Makassar', 'Palembang', 'Tangerang', 'Depok', 'Bekasi',
         ];
 
-        $city = $this->faker->randomElement($cities);
+        $states = [
+            'DKI Jakarta', 'Jawa Timur', 'Jawa Barat', 'Sumatera Utara', 'Jawa Tengah',
+            'Sulawesi Selatan', 'Sumatera Selatan', 'Banten', 'Jawa Barat', 'Jawa Barat',
+        ];
+
+        $cityIndex = $this->faker->numberBetween(0, count($cities) - 1);
+        $city = $cities[$cityIndex];
+        $state = $states[$cityIndex];
         $code = 'LOC-'.strtoupper(substr($city, 0, 3)).'-'.$this->faker->unique()->numberBetween(1, 999);
 
         return [
@@ -24,7 +31,7 @@ class LocationFactory extends Factory
             'name' => $city.' Branch',
             'address' => $this->faker->streetAddress(),
             'city' => $city,
-            'state' => $this->faker->state(),
+            'state' => $state,
             'country' => 'Indonesia',
             'postal_code' => $this->faker->postcode(),
             'phone' => $this->faker->phoneNumber(),
