@@ -2,9 +2,9 @@
 
 namespace Dearpos\Core;
 
+use Dearpos\Core\Commands\CoreCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Dearpos\Core\Commands\CoreCommand;
 
 class CoreServiceProvider extends PackageServiceProvider
 {
