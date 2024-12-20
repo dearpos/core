@@ -2,9 +2,9 @@
 
 namespace Dearpos\Core\Tests;
 
+use Dearpos\Core\CoreServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Dearpos\Core\CoreServiceProvider;
 
 class TestCase extends Orchestra
 {
