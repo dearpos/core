@@ -12,7 +12,7 @@ class LocationController extends Controller
 {
     public function index(): JsonResponse
     {
-        $locations = Location::all();
+        $locations = Location::withoutTrashed()->get();
 
         return response()->json($locations);
     }
@@ -41,5 +41,17 @@ class LocationController extends Controller
         $location->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if ($request->route('location')) {
+                $location = Location::withoutTrashed()->findOrFail($request->route('location'));
+                $request->route()->setParameter('location', $location);
+            }
+
+            return $next($request);
+        })->only(['show', 'update', 'destroy']);
     }
 }

@@ -12,7 +12,7 @@ class UnitOfMeasureController extends Controller
 {
     public function index(): JsonResponse
     {
-        $units = UnitOfMeasure::all();
+        $units = UnitOfMeasure::withoutTrashed()->get();
 
         return response()->json($units);
     }
@@ -41,5 +41,17 @@ class UnitOfMeasureController extends Controller
         $unit->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if ($request->route('unit')) {
+                $unit = UnitOfMeasure::withoutTrashed()->findOrFail($request->route('unit'));
+                $request->route()->setParameter('unit', $unit);
+            }
+
+            return $next($request);
+        })->only(['show', 'update', 'destroy']);
     }
 }

@@ -39,4 +39,25 @@ class TestCase extends Orchestra
             $migration->up();
         }
     }
+
+    protected function tearDown(): void
+    {
+        // Clean up the database after each test
+        $migrations = [
+            include __DIR__.'/../database/migrations/create_currencies_table.stub',
+            include __DIR__.'/../database/migrations/create_units_of_measures_table.stub',
+            include __DIR__.'/../database/migrations/create_locations_table.stub',
+        ];
+
+        foreach ($migrations as $migration) {
+            $migration->down();
+        }
+
+        parent::tearDown();
+    }
+
+    protected function defineRoutes($router)
+    {
+        require __DIR__.'/../routes/api.php';
+    }
 }

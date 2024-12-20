@@ -12,7 +12,7 @@ class CurrencyController extends Controller
 {
     public function index(): JsonResponse
     {
-        $currencies = Currency::all();
+        $currencies = Currency::withoutTrashed()->get();
 
         return response()->json($currencies);
     }
@@ -41,5 +41,17 @@ class CurrencyController extends Controller
         $currency->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if ($request->route('currency')) {
+                $currency = Currency::withoutTrashed()->findOrFail($request->route('currency'));
+                $request->route()->setParameter('currency', $currency);
+            }
+
+            return $next($request);
+        })->only(['show', 'update', 'destroy']);
     }
 }

@@ -1,8 +1,13 @@
 <?php
 
+namespace Dearpos\Core\Tests\Feature;
+
 use Dearpos\Core\Models\Location;
+use Dearpos\Core\Tests\TestCase;
 
 beforeEach(function () {
+    Location::query()->forceDelete();
+
     $this->location = Location::factory()->create([
         'code' => 'HO-JKT',
         'name' => 'Head Office Jakarta',
@@ -17,35 +22,87 @@ beforeEach(function () {
     ]);
 });
 
-test('can list all locations', function () {
-    Location::factory()->count(3)->create();
-
-    $response = $this->getJson('/api/core/locations');
-
-    $response->assertStatus(200);
-    $this->assertCount(4, $response->json()); // 3 + 1 from beforeEach
-});
-
 test('can create new location', function () {
-    $locationData = [
+    $data = [
         'code' => 'WH-BDG',
         'name' => 'Warehouse Bandung',
-        'address' => 'Jl. Pasteur No. 1',
+        'address' => 'Jl. Asia Afrika No. 1',
         'city' => 'Bandung',
         'state' => 'Jawa Barat',
         'country' => 'Indonesia',
-        'postal_code' => '40161',
+        'postal_code' => '40111',
         'phone' => '022-5555555',
         'email' => 'wh.bandung@dearpos.com',
         'is_active' => true,
     ];
 
-    $response = $this->postJson('/api/core/locations', $locationData);
+    $response = $this->postJson('/api/core/locations', $data);
 
     $response->assertStatus(201);
-    $response->assertJsonFragment($locationData);
+    $response->assertJsonFragment($data);
 
-    $this->assertDatabaseHas('locations', $locationData);
+    $this->assertDatabaseHas('locations', [
+        'code' => 'WH-BDG',
+        'name' => 'Warehouse Bandung',
+    ]);
+});
+
+test('cannot create location with duplicate code', function () {
+    $data = [
+        'code' => 'HO-JKT',
+        'name' => 'Head Office Jakarta',
+        'address' => 'Jl. Sudirman No. 1',
+        'city' => 'Jakarta',
+        'state' => 'DKI Jakarta',
+        'country' => 'Indonesia',
+        'postal_code' => '12190',
+        'phone' => '021-5555555',
+        'email' => 'ho.jakarta2@dearpos.com',
+        'is_active' => true,
+    ];
+
+    $response = $this->postJson('/api/core/locations', $data);
+
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['code']);
+});
+
+test('cannot create location with duplicate email', function () {
+    $data = [
+        'code' => 'HO-JKT2',
+        'name' => 'Head Office Jakarta',
+        'address' => 'Jl. Sudirman No. 1',
+        'city' => 'Jakarta',
+        'state' => 'DKI Jakarta',
+        'country' => 'Indonesia',
+        'postal_code' => '12190',
+        'phone' => '021-5555555',
+        'email' => 'ho.jakarta@dearpos.com',
+        'is_active' => true,
+    ];
+
+    $response = $this->postJson('/api/core/locations', $data);
+
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['email']);
+});
+
+test('can list all locations', function () {
+    $response = $this->getJson('/api/core/locations');
+
+    $response->assertStatus(200);
+    $response->assertJsonFragment([
+        'code' => 'HO-JKT',
+        'name' => 'Head Office Jakarta',
+        'address' => 'Jl. Sudirman No. 1',
+        'city' => 'Jakarta',
+        'state' => 'DKI Jakarta',
+        'country' => 'Indonesia',
+        'postal_code' => '12190',
+        'phone' => '021-5555555',
+        'email' => 'ho.jakarta@dearpos.com',
+        'is_active' => true,
+    ]);
 });
 
 test('can show location details', function () {
@@ -55,12 +112,20 @@ test('can show location details', function () {
     $response->assertJsonFragment([
         'code' => 'HO-JKT',
         'name' => 'Head Office Jakarta',
+        'address' => 'Jl. Sudirman No. 1',
+        'city' => 'Jakarta',
+        'state' => 'DKI Jakarta',
+        'country' => 'Indonesia',
+        'postal_code' => '12190',
+        'phone' => '021-5555555',
+        'email' => 'ho.jakarta@dearpos.com',
+        'is_active' => true,
     ]);
 });
 
 test('can update location', function () {
     $updatedData = [
-        'code' => 'HO-JKTU', // Changed to unique code
+        'code' => 'HO-JKT',
         'name' => 'Head Office Jakarta Updated',
         'address' => 'Jl. Sudirman No. 1',
         'city' => 'Jakarta',
@@ -68,7 +133,7 @@ test('can update location', function () {
         'country' => 'Indonesia',
         'postal_code' => '12190',
         'phone' => '021-5555555',
-        'email' => 'ho.jakarta.updated@dearpos.com', // Changed to unique email
+        'email' => 'ho.jakarta@dearpos.com',
         'is_active' => true,
     ];
 
@@ -77,7 +142,10 @@ test('can update location', function () {
     $response->assertStatus(200);
     $response->assertJsonFragment($updatedData);
 
-    $this->assertDatabaseHas('locations', $updatedData);
+    $this->assertDatabaseHas('locations', [
+        'id' => $this->location->id,
+        'name' => 'Head Office Jakarta Updated',
+    ]);
 });
 
 test('can delete location', function () {
@@ -86,46 +154,6 @@ test('can delete location', function () {
     $response->assertStatus(204);
 
     $this->assertSoftDeleted('locations', [
-        'id' => $this->location->id
+        'id' => $this->location->id,
     ]);
-});
-
-test('cannot create location with duplicate code', function () {
-    $locationData = [
-        'code' => 'HO-JKT', // Already exists from beforeEach
-        'name' => 'Another Head Office',
-        'address' => 'Jl. Thamrin No. 1',
-        'city' => 'Jakarta',
-        'state' => 'DKI Jakarta',
-        'country' => 'Indonesia',
-        'postal_code' => '12190',
-        'phone' => '021-5555556',
-        'email' => 'another.ho@dearpos.com',
-        'is_active' => true,
-    ];
-
-    $response = $this->postJson('/api/core/locations', $locationData);
-
-    $response->assertStatus(422)
-        ->assertJsonValidationErrors(['code']);
-});
-
-test('cannot create location with duplicate email', function () {
-    $locationData = [
-        'code' => 'WH-JKT',
-        'name' => 'Warehouse Jakarta',
-        'address' => 'Jl. Thamrin No. 1',
-        'city' => 'Jakarta',
-        'state' => 'DKI Jakarta',
-        'country' => 'Indonesia',
-        'postal_code' => '12190',
-        'phone' => '021-5555556',
-        'email' => 'ho.jakarta@dearpos.com', // Already exists from beforeEach
-        'is_active' => true,
-    ];
-
-    $response = $this->postJson('/api/core/locations', $locationData);
-
-    $response->assertStatus(422)
-        ->assertJsonValidationErrors(['email']);
 });

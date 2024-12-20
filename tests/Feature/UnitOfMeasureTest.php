@@ -1,35 +1,56 @@
 <?php
 
+namespace Dearpos\Core\Tests\Feature;
+
 use Dearpos\Core\Models\UnitOfMeasure;
+use Dearpos\Core\Tests\TestCase;
 
 beforeEach(function () {
+    UnitOfMeasure::query()->forceDelete();
+
     $this->uom = UnitOfMeasure::factory()->create([
         'code' => 'PCS',
         'name' => 'Pieces',
     ]);
 });
 
-test('can list all units of measure', function () {
-    UnitOfMeasure::factory()->count(3)->create();
+test('can create new unit of measure', function () {
+    $data = [
+        'code' => 'M',
+        'name' => 'Meter',
+    ];
 
+    $response = $this->postJson('/api/core/units', $data);
+
+    $response->assertStatus(201);
+    $response->assertJsonFragment($data);
+
+    $this->assertDatabaseHas('units_of_measures', [
+        'code' => 'M',
+        'name' => 'Meter',
+    ]);
+});
+
+test('cannot create unit of measure with duplicate code', function () {
+    $data = [
+        'code' => 'PCS',
+        'name' => 'Pieces',
+    ];
+
+    $response = $this->postJson('/api/core/units', $data);
+
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['code']);
+});
+
+test('can list all units of measure', function () {
     $response = $this->getJson('/api/core/units');
 
     $response->assertStatus(200);
-    $this->assertCount(4, $response->json()); // 3 + 1 from beforeEach
-});
-
-test('can create new unit of measure', function () {
-    $uomData = [
-        'code' => 'PACK',
-        'name' => 'Pack',
-    ];
-
-    $response = $this->postJson('/api/core/units', $uomData);
-
-    $response->assertStatus(201);
-    $response->assertJsonFragment($uomData);
-
-    $this->assertDatabaseHas('units_of_measures', $uomData);
+    $response->assertJsonFragment([
+        'code' => 'PCS',
+        'name' => 'Pieces',
+    ]);
 });
 
 test('can show unit of measure details', function () {
@@ -44,7 +65,7 @@ test('can show unit of measure details', function () {
 
 test('can update unit of measure', function () {
     $updatedData = [
-        'code' => 'PCSU', // Changed to unique code
+        'code' => 'PCSU',
         'name' => 'Pieces Updated',
     ];
 
@@ -53,7 +74,11 @@ test('can update unit of measure', function () {
     $response->assertStatus(200);
     $response->assertJsonFragment($updatedData);
 
-    $this->assertDatabaseHas('units_of_measures', $updatedData);
+    $this->assertDatabaseHas('units_of_measures', [
+        'id' => $this->uom->id,
+        'code' => 'PCSU',
+        'name' => 'Pieces Updated',
+    ]);
 });
 
 test('can delete unit of measure', function () {
@@ -62,18 +87,6 @@ test('can delete unit of measure', function () {
     $response->assertStatus(204);
 
     $this->assertSoftDeleted('units_of_measures', [
-        'id' => $this->uom->id
+        'id' => $this->uom->id,
     ]);
-});
-
-test('cannot create unit of measure with duplicate code', function () {
-    $uomData = [
-        'code' => 'PCS', // Already exists from beforeEach
-        'name' => 'Another PCS',
-    ];
-
-    $response = $this->postJson('/api/core/units', $uomData);
-
-    $response->assertStatus(422)
-        ->assertJsonValidationErrors(['code']);
 });

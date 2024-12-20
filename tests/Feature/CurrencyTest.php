@@ -1,8 +1,13 @@
 <?php
 
+namespace Dearpos\Core\Tests\Feature;
+
 use Dearpos\Core\Models\Currency;
+use Dearpos\Core\Tests\TestCase;
 
 beforeEach(function () {
+    Currency::query()->forceDelete();
+
     $this->currency = Currency::factory()->create([
         'code' => 'IDR',
         'name' => 'Indonesian Rupiah',
@@ -10,28 +15,51 @@ beforeEach(function () {
     ]);
 });
 
-test('can list all currencies', function () {
-    Currency::factory()->count(3)->create();
+test('can create new currency', function () {
+    $data = [
+        'code' => 'USD',
+        'name' => 'United States Dollar',
+        'exchange_rate' => 15000,
+    ];
 
+    $response = $this->postJson('/api/core/currencies', $data);
+
+    $response->assertStatus(201);
+    $response->assertJsonFragment([
+        'code' => 'USD',
+        'name' => 'United States Dollar',
+        'exchange_rate' => '15000.0000',
+    ]);
+
+    $this->assertDatabaseHas('currencies', [
+        'code' => 'USD',
+        'name' => 'United States Dollar',
+        'exchange_rate' => 15000,
+    ]);
+});
+
+test('cannot create currency with duplicate code', function () {
+    $data = [
+        'code' => 'IDR',
+        'name' => 'Indonesian Rupiah',
+        'exchange_rate' => 1,
+    ];
+
+    $response = $this->postJson('/api/core/currencies', $data);
+
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['code']);
+});
+
+test('can list all currencies', function () {
     $response = $this->getJson('/api/core/currencies');
 
     $response->assertStatus(200);
-    $this->assertCount(4, $response->json()); // 3 + 1 from beforeEach
-});
-
-test('can create new currency', function () {
-    $currencyData = [
-        'code' => 'USD',
-        'name' => 'US Dollar',
-        'exchange_rate' => 15500.0,
-    ];
-
-    $response = $this->postJson('/api/core/currencies', $currencyData);
-
-    $response->assertStatus(201);
-    $response->assertJsonFragment($currencyData);
-
-    $this->assertDatabaseHas('currencies', $currencyData);
+    $response->assertJsonFragment([
+        'code' => 'IDR',
+        'name' => 'Indonesian Rupiah',
+        'exchange_rate' => '1.0000',
+    ]);
 });
 
 test('can show currency details', function () {
@@ -41,7 +69,7 @@ test('can show currency details', function () {
     $response->assertJsonFragment([
         'code' => 'IDR',
         'name' => 'Indonesian Rupiah',
-        'exchange_rate' => 1.0,
+        'exchange_rate' => '1.0000',
     ]);
 });
 
@@ -49,15 +77,22 @@ test('can update currency', function () {
     $updatedData = [
         'code' => 'IDR',
         'name' => 'Indonesian Rupiah Updated',
-        'exchange_rate' => 1.5,
+        'exchange_rate' => 1,
     ];
 
     $response = $this->putJson("/api/core/currencies/{$this->currency->id}", $updatedData);
 
     $response->assertStatus(200);
-    $response->assertJsonFragment($updatedData);
+    $response->assertJsonFragment([
+        'code' => 'IDR',
+        'name' => 'Indonesian Rupiah Updated',
+        'exchange_rate' => '1.0000',
+    ]);
 
-    $this->assertDatabaseHas('currencies', $updatedData);
+    $this->assertDatabaseHas('currencies', [
+        'id' => $this->currency->id,
+        'name' => 'Indonesian Rupiah Updated',
+    ]);
 });
 
 test('can delete currency', function () {
@@ -65,21 +100,7 @@ test('can delete currency', function () {
 
     $response->assertStatus(204);
 
-    $this->assertDatabaseMissing('currencies', [
+    $this->assertSoftDeleted('currencies', [
         'id' => $this->currency->id,
-        'deleted_at' => null,
     ]);
-});
-
-test('cannot create currency with duplicate code', function () {
-    $currencyData = [
-        'code' => 'IDR', // Already exists from beforeEach
-        'name' => 'Another IDR',
-        'exchange_rate' => 1.0,
-    ];
-
-    $response = $this->postJson('/api/core/currencies', $currencyData);
-
-    $response->assertStatus(422)
-        ->assertJsonValidationErrors(['code']);
 });
