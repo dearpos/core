@@ -62,7 +62,7 @@ test('can delete unit of measure', function () {
     $response->assertStatus(204);
 
     $this->assertSoftDeleted('units_of_measures', [
-        'id' => $this->uom->id
+        'id' => $this->uom->id,
     ]);
 });
 

@@ -86,7 +86,7 @@ test('can delete location', function () {
     $response->assertStatus(204);
 
     $this->assertSoftDeleted('locations', [
-        'id' => $this->location->id
+        'id' => $this->location->id,
     ]);
 });
 
