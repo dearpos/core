@@ -13,15 +13,15 @@ class LocationFactory extends Factory
     {
         $cities = [
             'Jakarta', 'Surabaya', 'Bandung', 'Medan', 'Semarang',
-            'Makassar', 'Palembang', 'Tangerang', 'Depok', 'Bekasi'
+            'Makassar', 'Palembang', 'Tangerang', 'Depok', 'Bekasi',
         ];
 
         $city = $this->faker->randomElement($cities);
-        $code = 'LOC-' . strtoupper(substr($city, 0, 3)) . '-' . $this->faker->unique()->numberBetween(1, 999);
+        $code = 'LOC-'.strtoupper(substr($city, 0, 3)).'-'.$this->faker->unique()->numberBetween(1, 999);
 
         return [
             'code' => $code,
-            'name' => $city . ' Branch',
+            'name' => $city.' Branch',
             'address' => $this->faker->streetAddress(),
             'city' => $city,
             'state' => $this->faker->state(),

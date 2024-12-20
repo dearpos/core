@@ -28,18 +28,18 @@ class CoreServiceProvider extends PackageServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/core.php' => config_path('core.php'),
+            __DIR__.'/../config/core.php' => config_path('core.php'),
         ]);
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishesMigrations([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ]);
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/core.php', 'core');
+        $this->mergeConfigFrom(__DIR__.'/../config/core.php', 'core');
     }
 }
