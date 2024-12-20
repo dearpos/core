@@ -21,24 +21,24 @@ class UnitOfMeasureController extends Controller
     {
         $unit = UnitOfMeasure::create($request->validated());
 
-        return response()->json($unit, 201);
+        return response()->json($unit->fresh(), 201);
     }
 
-    public function show(UnitOfMeasure $unitOfMeasure): JsonResponse
+    public function show(UnitOfMeasure $unit): JsonResponse
     {
-        return response()->json($unitOfMeasure);
+        return response()->json($unit);
     }
 
-    public function update(UpdateUnitOfMeasureRequest $request, UnitOfMeasure $unitOfMeasure): JsonResponse
+    public function update(UpdateUnitOfMeasureRequest $request, UnitOfMeasure $unit): JsonResponse
     {
-        $unitOfMeasure->update($request->validated());
+        $unit->update($request->validated());
 
-        return response()->json($unitOfMeasure);
+        return response()->json($unit->fresh());
     }
 
-    public function destroy(UnitOfMeasure $unitOfMeasure): JsonResponse
+    public function destroy(UnitOfMeasure $unit): JsonResponse
     {
-        $unitOfMeasure->delete();
+        $unit->delete();
 
         return response()->json(null, 204);
     }

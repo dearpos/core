@@ -21,7 +21,7 @@ class CurrencyController extends Controller
     {
         $currency = Currency::create($request->validated());
 
-        return response()->json($currency, 201);
+        return response()->json($currency->fresh(), 201);
     }
 
     public function show(Currency $currency): JsonResponse
@@ -33,7 +33,7 @@ class CurrencyController extends Controller
     {
         $currency->update($request->validated());
 
-        return response()->json($currency);
+        return response()->json($currency->fresh());
     }
 
     public function destroy(Currency $currency): JsonResponse

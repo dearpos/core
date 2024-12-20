@@ -21,7 +21,7 @@ class LocationController extends Controller
     {
         $location = Location::create($request->validated());
 
-        return response()->json($location, 201);
+        return response()->json($location->fresh(), 201);
     }
 
     public function show(Location $location): JsonResponse
@@ -33,7 +33,7 @@ class LocationController extends Controller
     {
         $location->update($request->validated());
 
-        return response()->json($location);
+        return response()->json($location->fresh());
     }
 
     public function destroy(Location $location): JsonResponse

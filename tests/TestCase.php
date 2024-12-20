@@ -28,9 +28,15 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_core_table.php.stub';
-        $migration->up();
-        */
+        // Run the migrations
+        $migrations = [
+            include __DIR__.'/../database/migrations/create_currencies_table.stub',
+            include __DIR__.'/../database/migrations/create_units_of_measures_table.stub',
+            include __DIR__.'/../database/migrations/create_locations_table.stub',
+        ];
+
+        foreach ($migrations as $migration) {
+            $migration->up();
+        }
     }
 }
