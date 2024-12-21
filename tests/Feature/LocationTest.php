@@ -35,7 +35,7 @@ test('can create new location', function () {
         'is_active' => true,
     ];
 
-    $response = $this->postJson('/api/core/locations', $data);
+    $response = $this->postJson('/api/locations', $data);
 
     $response->assertStatus(201);
     $response->assertJsonFragment($data);
@@ -60,7 +60,7 @@ test('cannot create location with duplicate code', function () {
         'is_active' => true,
     ];
 
-    $response = $this->postJson('/api/core/locations', $data);
+    $response = $this->postJson('/api/locations', $data);
 
     $response->assertStatus(422);
     $response->assertJsonValidationErrors(['code']);
@@ -80,14 +80,14 @@ test('cannot create location with duplicate email', function () {
         'is_active' => true,
     ];
 
-    $response = $this->postJson('/api/core/locations', $data);
+    $response = $this->postJson('/api/locations', $data);
 
     $response->assertStatus(422);
     $response->assertJsonValidationErrors(['email']);
 });
 
 test('can list all locations', function () {
-    $response = $this->getJson('/api/core/locations');
+    $response = $this->getJson('/api/locations');
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -105,7 +105,7 @@ test('can list all locations', function () {
 });
 
 test('can show location details', function () {
-    $response = $this->getJson("/api/core/locations/{$this->location->id}");
+    $response = $this->getJson("/api/locations/{$this->location->id}");
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -136,7 +136,7 @@ test('can update location', function () {
         'is_active' => true,
     ];
 
-    $response = $this->putJson("/api/core/locations/{$this->location->id}", $updatedData);
+    $response = $this->putJson("/api/locations/{$this->location->id}", $updatedData);
 
     $response->assertStatus(200);
     $response->assertJsonFragment($updatedData);
@@ -148,7 +148,7 @@ test('can update location', function () {
 });
 
 test('can delete location', function () {
-    $response = $this->deleteJson("/api/core/locations/{$this->location->id}");
+    $response = $this->deleteJson("/api/locations/{$this->location->id}");
 
     $response->assertStatus(204);
 

@@ -19,7 +19,7 @@ test('can create new unit of measure', function () {
         'name' => 'Meter',
     ];
 
-    $response = $this->postJson('/api/core/units', $data);
+    $response = $this->postJson('/api/units', $data);
 
     $response->assertStatus(201);
     $response->assertJsonFragment($data);
@@ -36,14 +36,14 @@ test('cannot create unit of measure with duplicate code', function () {
         'name' => 'Pieces',
     ];
 
-    $response = $this->postJson('/api/core/units', $data);
+    $response = $this->postJson('/api/units', $data);
 
     $response->assertStatus(422);
     $response->assertJsonValidationErrors(['code']);
 });
 
 test('can list all units of measure', function () {
-    $response = $this->getJson('/api/core/units');
+    $response = $this->getJson('/api/units');
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -53,7 +53,7 @@ test('can list all units of measure', function () {
 });
 
 test('can show unit of measure details', function () {
-    $response = $this->getJson("/api/core/units/{$this->uom->id}");
+    $response = $this->getJson("/api/units/{$this->uom->id}");
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -68,7 +68,7 @@ test('can update unit of measure', function () {
         'name' => 'Pieces Updated',
     ];
 
-    $response = $this->putJson("/api/core/units/{$this->uom->id}", $updatedData);
+    $response = $this->putJson("/api/units/{$this->uom->id}", $updatedData);
 
     $response->assertStatus(200);
     $response->assertJsonFragment($updatedData);
@@ -81,7 +81,7 @@ test('can update unit of measure', function () {
 });
 
 test('can delete unit of measure', function () {
-    $response = $this->deleteJson("/api/core/units/{$this->uom->id}");
+    $response = $this->deleteJson("/api/units/{$this->uom->id}");
 
     $response->assertStatus(204);
 

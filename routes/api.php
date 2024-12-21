@@ -6,14 +6,12 @@ use Dearpos\Core\Http\Controllers\UnitOfMeasureController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
-    Route::prefix('core')->group(function () {
-        // Currency Routes
-        Route::apiResource('currencies', CurrencyController::class);
+    // Currency Routes
+    Route::apiResource('currencies', CurrencyController::class);
 
-        // Unit of Measure Routes
-        Route::apiResource('units', UnitOfMeasureController::class);
+    // Unit of Measure Routes
+    Route::apiResource('units', UnitOfMeasureController::class);
 
-        // Location Routes
-        Route::apiResource('locations', LocationController::class);
-    });
+    // Location Routes
+    Route::apiResource('locations', LocationController::class);
 });

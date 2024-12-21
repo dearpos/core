@@ -21,7 +21,7 @@ test('can create new currency', function () {
         'exchange_rate' => 15000,
     ];
 
-    $response = $this->postJson('/api/core/currencies', $data);
+    $response = $this->postJson('/api/currencies', $data);
 
     $response->assertStatus(201);
     $response->assertJsonFragment([
@@ -44,14 +44,14 @@ test('cannot create currency with duplicate code', function () {
         'exchange_rate' => 1,
     ];
 
-    $response = $this->postJson('/api/core/currencies', $data);
+    $response = $this->postJson('/api/currencies', $data);
 
     $response->assertStatus(422);
     $response->assertJsonValidationErrors(['code']);
 });
 
 test('can list all currencies', function () {
-    $response = $this->getJson('/api/core/currencies');
+    $response = $this->getJson('/api/currencies');
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -62,7 +62,7 @@ test('can list all currencies', function () {
 });
 
 test('can show currency details', function () {
-    $response = $this->getJson("/api/core/currencies/{$this->currency->id}");
+    $response = $this->getJson("/api/currencies/{$this->currency->id}");
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -79,7 +79,7 @@ test('can update currency', function () {
         'exchange_rate' => 1,
     ];
 
-    $response = $this->putJson("/api/core/currencies/{$this->currency->id}", $updatedData);
+    $response = $this->putJson("/api/currencies/{$this->currency->id}", $updatedData);
 
     $response->assertStatus(200);
     $response->assertJsonFragment([
@@ -95,7 +95,7 @@ test('can update currency', function () {
 });
 
 test('can delete currency', function () {
-    $response = $this->deleteJson("/api/core/currencies/{$this->currency->id}");
+    $response = $this->deleteJson("/api/currencies/{$this->currency->id}");
 
     $response->assertStatus(204);
 

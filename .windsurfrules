@@ -1,0 +1,11 @@
+1. Project ini menggunakan boilerplate dari spatie/laravel-package-skeleton
+2. Project ini merupakan package yang akan digunakan di laravel.
+3. Ketika membuat migrations, models dan factories harus berdasarkan file documentations/00-tables.md.
+4. Ketika memembuat controllers, request dan response harus berdasarkan file documentations/01-controllers.md
+5. Ketika memasang routes, routes harus berdasarkan file documentations/02-routes.md.
+6. Ketika membuat resource filament harus berdasarkan file documentations/03-filament.md.
+7. Ketika membuat testing harus berdasarkan file documentations/04-testing.md.
+8. Migration file harus dalam format .php.stub
+9. Jangan ubah format apapun di dalam folder tests.
+10. Project ini harus mempunyai config file agar bisa di setting oleh user.
+11. Buatkan plugin provider agar bisa di register oleh filament di folder src dengan format nama {NamaPlugin}Plugin.
