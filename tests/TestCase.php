@@ -30,9 +30,9 @@ class TestCase extends Orchestra
 
         // Run the migrations
         $migrations = [
-            include __DIR__.'/../database/migrations/create_currencies_table.stub',
-            include __DIR__.'/../database/migrations/create_units_of_measures_table.stub',
-            include __DIR__.'/../database/migrations/create_locations_table.stub',
+            include __DIR__.'/../database/migrations/create_currencies_table.php.stub',
+            include __DIR__.'/../database/migrations/create_units_of_measures_table.php.stub',
+            include __DIR__.'/../database/migrations/create_locations_table.php.stub',
         ];
 
         foreach ($migrations as $migration) {
@@ -44,9 +44,9 @@ class TestCase extends Orchestra
     {
         // Clean up the database after each test
         $migrations = [
-            include __DIR__.'/../database/migrations/create_currencies_table.stub',
-            include __DIR__.'/../database/migrations/create_units_of_measures_table.stub',
-            include __DIR__.'/../database/migrations/create_locations_table.stub',
+            include __DIR__.'/../database/migrations/create_currencies_table.php.stub',
+            include __DIR__.'/../database/migrations/create_units_of_measures_table.php.stub',
+            include __DIR__.'/../database/migrations/create_locations_table.php.stub',
         ];
 
         foreach ($migrations as $migration) {
