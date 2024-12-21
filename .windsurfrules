@@ -1,11 +1,30 @@
+# Project Guidelines
+
+## Project Setup
 1. Project ini menggunakan boilerplate dari spatie/laravel-package-skeleton
-2. Project ini merupakan package yang akan digunakan di laravel.
-3. Ketika membuat migrations, models dan factories harus berdasarkan file documentations/00-tables.md.
-4. Ketika memembuat controllers, request dan response harus berdasarkan file documentations/01-controllers.md
-5. Ketika memasang routes, routes harus berdasarkan file documentations/02-routes.md.
-6. Ketika membuat resource filament harus berdasarkan file documentations/03-filament.md.
-7. Ketika membuat testing harus berdasarkan file documentations/04-testing.md.
-8. Migration file harus dalam format .php.stub
-9. Jangan ubah format apapun di dalam folder tests.
-10. Project ini harus mempunyai config file agar bisa di setting oleh user.
-11. Buatkan plugin provider agar bisa di register oleh filament di folder src dengan format nama {NamaPlugin}Plugin.
+2. Project ini merupakan package yang akan digunakan di Laravel
+3. Project ini harus mempunyai config file agar bisa di setting oleh user
+
+## Documentation Requirements
+1. Dokumentasi harus tersedia di folder 'documentations' dengan file-file berikut:
+   - 00-tables.md: Dokumentasi struktur tabel
+   - 01-controllers.md: Dokumentasi controller (dibuat berdasarkan 00-tables.md)
+   - 02-routes.md: Dokumentasi routes (dibuat berdasarkan 01-controllers.md)
+   - 03-functions.md: Dokumentasi fungsi-fungsi helper
+   - 04-testing.md: Dokumentasi testing
+
+## Development Guidelines
+1. Migrations, models, dan factories harus mengikuti spesifikasi di documentations/00-tables.md
+2. Controllers, requests, dan responses harus mengikuti spesifikasi di documentations/01-controllers.md
+3. Routes harus mengikuti spesifikasi di documentations/02-routes.md
+4. Helper functions harus mengikuti spesifikasi di documentations/03-functions.md
+5. Testing harus mengikuti spesifikasi di documentations/04-testing.md
+6. Format di dalam folder tests tidak boleh diubah
+
+## File Validation
+Sebelum development, pastikan file-file berikut tersedia:
+1. documentations/00-tables.md
+2. documentations/01-controllers.md (jika tidak ada, buat berdasarkan 00-tables.md)
+3. documentations/02-routes.md (jika tidak ada, buat berdasarkan 01-controllers.md)
+4. documentations/03-functions.md (jika tidak ada, buat berdasarkan kebutuhan plugin)
+5. documentations/04-testing.md (jika tidak ada, buat berdasarkan standar testing)

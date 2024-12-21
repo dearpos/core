@@ -46,7 +46,6 @@ class CoreServiceProvider extends PackageServiceProvider
                 'create_locations_table',
                 'create_units_of_measures_table',
             ])
-            ->hasAssets()
             ->hasCommand(CoreCommand::class);
     }
 }

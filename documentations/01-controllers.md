@@ -24,6 +24,7 @@ Modul ini berisi daftar controller yang akan digunakan untuk mengelola data pada
 ##### Index Response
 ```json
 {
+    "current_page": 1,
     "data": [
         {
             "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -34,21 +35,11 @@ Modul ini berisi daftar controller yang akan digunakan untuk mengelola data pada
             "updated_at": "2024-12-21T15:19:21.000000Z"
         }
     ],
-    "links": {
-        "first": "http://example.com/api/currencies?page=1",
-        "last": "http://example.com/api/currencies?page=1",
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "current_page": 1,
-        "from": 1,
-        "last_page": 1,
-        "path": "http://example.com/api/currencies",
-        "per_page": 15,
-        "to": 1,
-        "total": 1
-    }
+    "from": 1,
+    "last_page": 1,
+    "per_page": 15,
+    "to": 1,
+    "total": 1
 }
 ```
 
@@ -84,6 +75,7 @@ Modul ini berisi daftar controller yang akan digunakan untuk mengelola data pada
 ##### Index Response
 ```json
 {
+    "current_page": 1,
     "data": [
         {
             "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -93,21 +85,11 @@ Modul ini berisi daftar controller yang akan digunakan untuk mengelola data pada
             "updated_at": "2024-12-21T15:19:21.000000Z"
         }
     ],
-    "links": {
-        "first": "http://example.com/api/units?page=1",
-        "last": "http://example.com/api/units?page=1",
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "current_page": 1,
-        "from": 1,
-        "last_page": 1,
-        "path": "http://example.com/api/units",
-        "per_page": 15,
-        "to": 1,
-        "total": 1
-    }
+    "from": 1,
+    "last_page": 1,
+    "per_page": 15,
+    "to": 1,
+    "total": 1
 }
 ```
 
@@ -150,6 +132,7 @@ Modul ini berisi daftar controller yang akan digunakan untuk mengelola data pada
 ##### Index Response
 ```json
 {
+    "current_page": 1,
     "data": [
         {
             "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -167,21 +150,11 @@ Modul ini berisi daftar controller yang akan digunakan untuk mengelola data pada
             "updated_at": "2024-12-21T15:19:21.000000Z"
         }
     ],
-    "links": {
-        "first": "http://example.com/api/locations?page=1",
-        "last": "http://example.com/api/locations?page=1",
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "current_page": 1,
-        "from": 1,
-        "last_page": 1,
-        "path": "http://example.com/api/locations",
-        "per_page": 15,
-        "to": 1,
-        "total": 1
-    }
+    "from": 1,
+    "last_page": 1,
+    "per_page": 15,
+    "to": 1,
+    "total": 1
 }
 ```
 
