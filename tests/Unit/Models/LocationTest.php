@@ -16,7 +16,7 @@ class LocationTest extends TestCase
     public function it_uses_uuid_as_primary_key()
     {
         $location = Location::factory()->create();
-        
+
         $this->assertIsString($location->id);
         $this->assertTrue(Str::isUuid($location->id));
     }

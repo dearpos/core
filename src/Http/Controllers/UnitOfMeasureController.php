@@ -37,14 +37,14 @@ class UnitOfMeasureController extends Controller
         $unit = UnitOfMeasure::create($request->validated());
 
         return response()->json([
-            'data' => new UnitOfMeasureResource($unit)
+            'data' => new UnitOfMeasureResource($unit),
         ], 201);
     }
 
     public function show(UnitOfMeasure $unit): JsonResponse
     {
         return response()->json([
-            'data' => new UnitOfMeasureResource($unit)
+            'data' => new UnitOfMeasureResource($unit),
         ]);
     }
 
@@ -53,7 +53,7 @@ class UnitOfMeasureController extends Controller
         $unit->update($request->validated());
 
         return response()->json([
-            'data' => new UnitOfMeasureResource($unit->fresh())
+            'data' => new UnitOfMeasureResource($unit->fresh()),
         ]);
     }
 

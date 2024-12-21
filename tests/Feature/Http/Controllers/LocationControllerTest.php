@@ -22,11 +22,11 @@ class LocationControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'id', 'code', 'name', 'address', 'city', 'state', 'country',
-                        'postal_code', 'phone', 'email', 'is_active', 'created_at', 'updated_at'
-                    ]
+                        'postal_code', 'phone', 'email', 'is_active', 'created_at', 'updated_at',
+                    ],
                 ],
                 'links',
-                'meta'
+                'meta',
             ]);
     }
 
@@ -49,10 +49,10 @@ class LocationControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     'id', 'code', 'name', 'address', 'city', 'country',
-                    'postal_code', 'is_active', 'created_at', 'updated_at'
-                ]
+                    'postal_code', 'is_active', 'created_at', 'updated_at',
+                ],
             ]);
-        
+
         $this->assertDatabaseHas('locations', $data);
     }
 

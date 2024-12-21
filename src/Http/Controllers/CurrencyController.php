@@ -37,14 +37,14 @@ class CurrencyController extends Controller
         $currency = Currency::create($request->validated());
 
         return response()->json([
-            'data' => new CurrencyResource($currency)
+            'data' => new CurrencyResource($currency),
         ], 201);
     }
 
     public function show(Currency $currency): JsonResponse
     {
         return response()->json([
-            'data' => new CurrencyResource($currency)
+            'data' => new CurrencyResource($currency),
         ]);
     }
 
@@ -53,7 +53,7 @@ class CurrencyController extends Controller
         $currency->update($request->validated());
 
         return response()->json([
-            'data' => new CurrencyResource($currency->fresh())
+            'data' => new CurrencyResource($currency->fresh()),
         ]);
     }
 

@@ -14,7 +14,7 @@ class UnitOfMeasureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:10', 'unique:units_of_measures,code,' . $this->route('id')],
+            'code' => ['required', 'string', 'max:10', 'unique:units_of_measures,code,'.$this->route('id')],
             'name' => ['required', 'string', 'max:50'],
         ];
     }

@@ -14,7 +14,7 @@ class CurrencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'size:3', 'unique:currencies,code,' . $this->route('id')],
+            'code' => ['required', 'string', 'size:3', 'unique:currencies,code,'.$this->route('id')],
             'name' => ['required', 'string', 'max:50'],
             'exchange_rate' => ['required', 'numeric', 'min:0'],
         ];

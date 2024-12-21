@@ -2,19 +2,22 @@
 
 namespace Dearpos\Core\Filament\Resources;
 
+use Dearpos\Core\Filament\Resources\CurrencyResource\Pages;
 use Dearpos\Core\Models\Currency;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-use Dearpos\Core\Filament\Resources\CurrencyResource\Pages;
+use Filament\Tables\Table;
 
 class CurrencyResource extends Resource
 {
     protected static ?string $model = Currency::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+
     protected static ?string $navigationGroup = 'Core';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form

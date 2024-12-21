@@ -37,14 +37,14 @@ class LocationController extends Controller
         $location = Location::create($request->validated());
 
         return response()->json([
-            'data' => new LocationResource($location)
+            'data' => new LocationResource($location),
         ], 201);
     }
 
     public function show(Location $location): JsonResponse
     {
         return response()->json([
-            'data' => new LocationResource($location)
+            'data' => new LocationResource($location),
         ]);
     }
 
@@ -53,7 +53,7 @@ class LocationController extends Controller
         $location->update($request->validated());
 
         return response()->json([
-            'data' => new LocationResource($location->fresh())
+            'data' => new LocationResource($location->fresh()),
         ]);
     }
 

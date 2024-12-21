@@ -14,7 +14,7 @@ class LocationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:20', 'unique:locations,code,' . $this->route('id')],
+            'code' => ['required', 'string', 'max:20', 'unique:locations,code,'.$this->route('id')],
             'name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string', 'max:65535'],
             'city' => ['required', 'string', 'max:100'],
@@ -22,7 +22,7 @@ class LocationRequest extends FormRequest
             'country' => ['required', 'string', 'max:100'],
             'postal_code' => ['required', 'string', 'max:20'],
             'phone' => ['nullable', 'string', 'max:20'],
-            'email' => ['nullable', 'string', 'email', 'max:100', 'unique:locations,email,' . $this->route('id')],
+            'email' => ['nullable', 'string', 'email', 'max:100', 'unique:locations,email,'.$this->route('id')],
             'is_active' => ['required', 'boolean'],
         ];
     }
