@@ -16,7 +16,7 @@ class UnitOfMeasureTest extends TestCase
     public function it_uses_uuid_as_primary_key()
     {
         $unit = UnitOfMeasure::factory()->create();
-        
+
         $this->assertIsString($unit->id);
         $this->assertTrue(Str::isUuid($unit->id));
     }

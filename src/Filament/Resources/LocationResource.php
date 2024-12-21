@@ -2,22 +2,25 @@
 
 namespace Dearpos\Core\Filament\Resources;
 
+use Dearpos\Core\Filament\Resources\LocationResource\Pages;
 use Dearpos\Core\Models\Location;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
-use Dearpos\Core\Filament\Resources\LocationResource\Pages;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class LocationResource extends Resource
 {
     protected static ?string $model = Location::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
     protected static ?string $navigationGroup = 'Core';
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form

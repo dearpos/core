@@ -16,7 +16,7 @@ class CurrencyTest extends TestCase
     public function it_uses_uuid_as_primary_key()
     {
         $currency = Currency::factory()->create();
-        
+
         $this->assertIsString($currency->id);
         $this->assertTrue(Str::isUuid($currency->id));
     }

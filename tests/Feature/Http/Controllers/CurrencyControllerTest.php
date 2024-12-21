@@ -20,10 +20,10 @@ class CurrencyControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'code', 'name', 'exchange_rate', 'created_at', 'updated_at']
+                    '*' => ['id', 'code', 'name', 'exchange_rate', 'created_at', 'updated_at'],
                 ],
                 'links',
-                'meta'
+                'meta',
             ]);
     }
 
@@ -40,9 +40,9 @@ class CurrencyControllerTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'data' => ['id', 'code', 'name', 'exchange_rate', 'created_at', 'updated_at']
+                'data' => ['id', 'code', 'name', 'exchange_rate', 'created_at', 'updated_at'],
             ]);
-        
+
         $this->assertDatabaseHas('currencies', $data);
     }
 

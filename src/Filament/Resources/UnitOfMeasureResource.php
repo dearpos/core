@@ -2,19 +2,22 @@
 
 namespace Dearpos\Core\Filament\Resources;
 
+use Dearpos\Core\Filament\Resources\UnitOfMeasureResource\Pages;
 use Dearpos\Core\Models\UnitOfMeasure;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-use Dearpos\Core\Filament\Resources\UnitOfMeasureResource\Pages;
+use Filament\Tables\Table;
 
 class UnitOfMeasureResource extends Resource
 {
     protected static ?string $model = UnitOfMeasure::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-scale';
+
     protected static ?string $navigationGroup = 'Core';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form

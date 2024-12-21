@@ -20,10 +20,10 @@ class UnitOfMeasureControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    '*' => ['id', 'code', 'name', 'created_at', 'updated_at']
+                    '*' => ['id', 'code', 'name', 'created_at', 'updated_at'],
                 ],
                 'links',
-                'meta'
+                'meta',
             ]);
     }
 
@@ -39,9 +39,9 @@ class UnitOfMeasureControllerTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'data' => ['id', 'code', 'name', 'created_at', 'updated_at']
+                'data' => ['id', 'code', 'name', 'created_at', 'updated_at'],
             ]);
-        
+
         $this->assertDatabaseHas('units_of_measures', $data);
     }
 
