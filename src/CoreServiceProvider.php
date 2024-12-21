@@ -29,7 +29,6 @@ class CoreServiceProvider extends PackageServiceProvider
 
     public function boot()
     {
-        parent::boot();
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
@@ -38,5 +37,10 @@ class CoreServiceProvider extends PackageServiceProvider
         ]);
 
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+    }
+
+    public function register()
+    {
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }
