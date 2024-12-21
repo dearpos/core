@@ -19,27 +19,11 @@ class CoreServiceProvider extends PackageServiceProvider
             ->name('core')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_currencies_table')
-            ->hasMigration('create_locations_table')
-            ->hasMigration('create_units_of_measures_table')
+            ->hasMigrations([
+                'create_currencies_table',
+                'create_locations_table',
+                'create_units_of_measures_table',
+            ])
             ->hasCommand(CoreCommand::class);
-    }
-
-    public function boot()
-    {
-        $this->publishes([
-            __DIR__.'/../config/core.php' => config_path('core.php'),
-        ]);
-
-        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
-
-        $this->publishesMigrations([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ]);
-    }
-
-    public function register()
-    {
-        $this->mergeConfigFrom(__DIR__.'/../config/core.php', 'core');
     }
 }
